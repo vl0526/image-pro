@@ -14,7 +14,7 @@ export default function HistoryPanel({ history }: HistoryPanelProps) {
     <div className="flex h-full flex-col">
       <div className="p-4 border-b">
         <h3 className="font-headline text-lg font-semibold">Lịch sử chỉnh sửa</h3>
-        <p className="text-sm text-muted-foreground">Recent project versions</p>
+        <p className="text-sm text-muted-foreground">Các phiên bản gần đây</p>
       </div>
       <ScrollArea className="flex-1">
         {history.length > 0 ? (
@@ -53,9 +53,9 @@ export default function HistoryPanel({ history }: HistoryPanelProps) {
             <div className="p-4 rounded-full bg-secondary mb-4">
                 <Image src="/history-placeholder.svg" width={48} height={48} alt="No history" />
             </div>
-            <p className="font-semibold">No History Yet</p>
+            <p className="font-semibold">Chưa có lịch sử</p>
             <p className="text-sm text-muted-foreground">
-              Your edits will appear here.
+              Các chỉnh sửa của bạn sẽ xuất hiện ở đây.
             </p>
           </div>
         )}

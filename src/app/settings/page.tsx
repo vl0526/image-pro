@@ -8,11 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
-  const [language, setLanguage] = useState("en-us");
 
   // To avoid hydration mismatch, we need to wait for the component to mount
   // before we can safely access the theme.
@@ -66,28 +64,6 @@ export default function SettingsPage() {
                                 System
                             </Label>
                         </RadioGroup>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle>Language & Region</CardTitle>
-                    <CardDescription>Set your preferred language and region.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                     <div className="space-y-2">
-                        <Label htmlFor="language">Language</Label>
-                        <Select value={language} onValueChange={setLanguage}>
-                            <SelectTrigger id="language">
-                                <SelectValue placeholder="Select language" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="en-us">English (United States)</SelectItem>
-                                <SelectItem value="vi-vn">Tiếng Việt (Việt Nam)</SelectItem>
-                                <SelectItem value="ja-jp">日本語 (日本)</SelectItem>
-                            </SelectContent>
-                        </Select>
                     </div>
                 </CardContent>
             </Card>
