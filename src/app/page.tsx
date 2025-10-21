@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { HelpCircle, History, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,6 @@ import { UploadArea } from "@/components/upload-area";
 import EditorLayout from "@/components/editor/editor-layout";
 import HistoryPanel from "@/components/history/history-panel";
 import type { Box, HistoryItem, AppStatus } from "@/lib/types";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { detectText, eraseText } from "@/ai/flows/image-utils-flow";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
@@ -29,91 +27,29 @@ export default function Home() {
   const [selectedBoxIds, setSelectedBoxIds] = useState<string[]>([]);
   const { toast } = useToast();
 
-
-  const uploadExample = useMemo(
-    () => PlaceHolderImages.find((img) => img.id === "upload-example"),
-    []
-  );
-  
-  const handleUpload = async (file: File) => {
+  const handleUpload = (file: File) => {
     const reader = new FileReader();
-    reader.onload = async (e) => {
+    reader.onload = (e) => {
       const result = e.target?.result as string;
       setOriginalImage(result);
-      setStatus("detecting");
-
-      try {
-        const detectedBoxes = await detectText({
-          imageDataUri: result,
-        });
-
-        // Get image dimensions to convert relative coords to absolute
-        const img = document.createElement('img');
-        img.src = result;
-        await new Promise(resolve => { img.onload = resolve; });
-
-        setBoxes(
-          detectedBoxes.map((box, i) => ({
-            id: `box-${i}`,
-            x: box.x * img.width,
-            y: box.y * img.height,
-            width: box.width * img.width,
-            height: box.height * img.height,
-            type: "auto",
-          }))
-        );
-        setStatus("editing");
-      } catch (error) {
-        console.error("Text detection failed:", error);
-        toast({
-          variant: "destructive",
-          title: "Text Detection Failed",
-          description: "Could not detect text in the image. Please try another one.",
-        });
-        setStatus("idle");
-      }
+      setProcessedImage(result); // Show the same image
+      setStatus("editing"); // Go directly to editing/viewing
     };
     reader.readAsDataURL(file);
   };
 
   const handleProcess = async () => {
-    if (!originalImage) return;
-
-    setStatus("processing");
-    try {
-      const result = await eraseText({
-        imageDataUri: originalImage,
-        boxes,
-      });
-      setProcessedImage(result.processedImageUri);
-
-      const newHistoryItem: HistoryItem = {
-        id: `hist-${history.length + 1}`,
-        timestamp: new Date().toISOString(),
-        action: "Text Removed & Anime Enhanced",
-        thumbnail: result.processedImageUri,
-      };
-      setHistory((prev) => [newHistoryItem, ...prev]);
-      setStatus("comparing");
-
-    } catch (error) {
-      console.error("Image processing failed:", error);
-      toast({
-        variant: "destructive",
-        title: "Processing Failed",
-        description: "Could not remove text from the image. Please try again.",
-      });
-      setStatus("editing");
-    }
+    // No AI processing, so this button is effectively disabled or does nothing.
+    toast({
+      title: "No AI Connected",
+      description: "The AI processing functionality has been removed.",
+    });
   };
-
 
   const handleReset = () => {
     setOriginalImage(null);
     setProcessedImage(null);
     setBoxes([]);
-    // Keep history for now, but you could clear it.
-    // setHistory([]);
     setSelectedBoxIds([]);
     setStatus("idle");
   };
