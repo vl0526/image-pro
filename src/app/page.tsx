@@ -194,7 +194,7 @@ export default function Home() {
                 Remove Text from Images
               </h2>
               <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                xóa
+                xóa nó
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
