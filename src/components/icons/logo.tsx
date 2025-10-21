@@ -12,24 +12,24 @@ export function Logo(props: React.SVGProps<SVGSVGElement>) {
         </linearGradient>
       </defs>
       <path
-        d="M20 20 L80 20 L80 80 L20 80 Z"
-        stroke="url(#logoGradient)"
-        strokeWidth="10"
+        d="M20,50 L50,20 L80,50 L50,80 Z"
+        fill="url(#logoGradient)"
+      />
+      <path
+        d="M35,50 L50,65 L65,50"
+        stroke="hsl(var(--primary-foreground))"
+        strokeWidth="8"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M40 40 L60 60"
-        stroke="hsl(var(--foreground))"
-        strokeWidth="8"
-        strokeLinecap="round"
-      />
        <path
-        d="M60 40 L40 60"
-        stroke="hsl(var(--foreground))"
+        d="M50,35 L50,45"
+        stroke="hsl(var(--primary-foreground))"
         strokeWidth="8"
+        fill="none"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
