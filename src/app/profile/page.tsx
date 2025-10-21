@@ -1,4 +1,6 @@
 
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,9 +13,17 @@ export default function ProfilePage() {
     <div className="flex min-h-screen flex-col bg-background font-body text-foreground">
        {/* We can add a shared header component later */}
        <header className="flex h-16 items-center border-b px-4 sm:px-6 lg:px-8">
-        <h1 className="font-headline text-xl font-bold text-white">
-          Profile
-        </h1>
+        <div className="flex items-center gap-4">
+            <Button asChild variant="ghost" size="icon">
+                <Link href="/">
+                    <ArrowLeft />
+                    <span className="sr-only">Back to Home</span>
+                </Link>
+            </Button>
+            <h1 className="font-headline text-xl font-bold text-white">
+            Profile
+            </h1>
+        </div>
        </header>
        <main className="flex-1 p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-3xl space-y-8">
