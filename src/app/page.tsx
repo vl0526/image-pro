@@ -111,14 +111,6 @@ export default function Home() {
     </header>
   );
 
-  const Footer = () => (
-    <footer className="flex h-10 items-center justify-center border-t border-white/10 px-4 text-center">
-      <p className="text-xs text-muted-foreground">
-        AI-powered manga text removal.
-      </p>
-    </footer>
-  );
-
   return (
     <div className="flex min-h-screen flex-col bg-background font-body text-foreground">
       <Header />
@@ -150,7 +142,6 @@ export default function Home() {
           />
         )}
       </main>
-      <Footer />
     </div>
   );
 }
