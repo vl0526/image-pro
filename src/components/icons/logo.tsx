@@ -2,7 +2,7 @@ export function Logo(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 100 100"
-      aria-label="Clean Slate Logo"
+      aria-label="Remove Pro Logo"
       {...props}
     >
       <defs>
@@ -12,10 +12,24 @@ export function Logo(props: React.SVGProps<SVGSVGElement>) {
         </linearGradient>
       </defs>
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M50 10C27.9086 10 10 27.9086 10 50C10 72.0914 27.9086 90 50 90V80C33.4315 80 20 66.5685 20 50C20 33.4315 33.4315 20 50 20C66.5685 20 80 33.4315 80 50C80 66.5685 66.5685 80 50 80V90C72.0914 90 90 72.0914 90 50C90 27.9086 72.0914 10 50 10Z"
-        fill="url(#logoGradient)"
+        d="M20 20 L80 20 L80 80 L20 80 Z"
+        stroke="url(#logoGradient)"
+        strokeWidth="10"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M40 40 L60 60"
+        stroke="hsl(var(--foreground))"
+        strokeWidth="8"
+        strokeLinecap="round"
+      />
+       <path
+        d="M60 40 L40 60"
+        stroke="hsl(var(--foreground))"
+        strokeWidth="8"
+        strokeLinecap="round"
       />
     </svg>
   );
