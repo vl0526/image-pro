@@ -7,7 +7,6 @@ import { PanelRightOpen } from "lucide-react";
 import ActionBar from "./action-bar";
 import CanvasArea from "./canvas-area";
 import InspectorPanel from "./inspector-panel";
-import ProgressModal from "./progress-modal";
 import type { AppStatus, Box } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 
@@ -38,30 +37,38 @@ export default function EditorLayout({
   const { toast } = useToast();
 
   const handleDownload = () => {
-    toast({
-      title: "Download Started",
-      description: "Your enhanced image is being downloaded.",
-    });
-    // In a real app, this would trigger a file download.
-    if (processedImage) {
+    const imageToDownload = processedImage || originalImage;
+    if (imageToDownload) {
         const link = document.createElement('a');
-        link.href = processedImage;
-        link.download = 'manga-text-eraser-result.png';
+        link.href = imageToDownload;
+        link.download = 'remove-pro-result.png';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        toast({
+          title: "Download Started",
+          description: "Your image is being downloaded.",
+        });
+    } else {
+       toast({
+          variant: "destructive",
+          title: "Download Failed",
+          description: "There is no image to download.",
+        });
     }
   };
 
   return (
-    <div className="relative flex h-[calc(100vh-8.5rem)] w-full gap-4 p-4 md:p-6 lg:p-8">
+    <div className="flex h-[calc(100vh-8.5rem)] w-full gap-4 p-4 md:p-6 lg:p-8">
       <div className="flex flex-1 flex-col gap-4">
-        <div className="relative flex-1 rounded-xl border-2 border-dashed border-border bg-card/50">
+        <div className="relative flex-1 rounded-xl border-2 border-dashed border-border bg-card/50 overflow-hidden">
           <CanvasArea
             status={status}
             originalImage={originalImage}
             processedImage={processedImage}
             boxes={boxes}
+            selectedBoxIds={selectedBoxIds}
+            setSelectedBoxIds={setSelectedBoxIds}
             comparisonMode={comparisonMode}
           />
         </div>
@@ -72,6 +79,7 @@ export default function EditorLayout({
           onDownload={handleDownload}
           comparisonMode={comparisonMode}
           setComparisonMode={setComparisonMode}
+          canProcess={boxes.length > 0 && status === 'editing'}
         />
       </div>
 
@@ -102,7 +110,7 @@ export default function EditorLayout({
         </Sheet>
       </div>
 
-      <ProgressModal status={status} />
+      {/* ProgressModal is removed as processing is now simulated and quick */}
     </div>
   );
 }

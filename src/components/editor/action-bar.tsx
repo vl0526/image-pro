@@ -25,6 +25,7 @@ type ActionBarProps = {
   onDownload: () => void;
   comparisonMode: "side-by-side" | "slider" | null;
   setComparisonMode: (mode: "side-by-side" | "slider" | null) => void;
+  canProcess: boolean;
 };
 
 export default function ActionBar({
@@ -34,8 +35,9 @@ export default function ActionBar({
   onDownload,
   comparisonMode,
   setComparisonMode,
+  canProcess,
 }: ActionBarProps) {
-  const isProcessing = status === "detecting" || status === "processing";
+  const isProcessing = status === "processing";
   const isComparing = status === "comparing";
 
   return (
@@ -79,7 +81,7 @@ export default function ActionBar({
             size="lg"
             className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold"
             onClick={onProcess}
-            disabled={isProcessing || isComparing}
+            disabled={isProcessing || !canProcess}
           >
             <Trash2 className="mr-2 h-5 w-5" />
             Xóa Văn Bản
@@ -87,7 +89,7 @@ export default function ActionBar({
         </div>
 
         <div className="flex items-center gap-2">
-          {isComparing && (
+          {isComparing ? (
             <>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -128,6 +130,8 @@ export default function ActionBar({
                 </TooltipContent>
               </Tooltip>
             </>
+          ) : (
+            <div className="w-[124px]" /> // Placeholder to maintain layout
           )}
         </div>
       </TooltipProvider>

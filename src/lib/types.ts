@@ -4,7 +4,7 @@ export type Box = {
   y: number;
   width: number;
   height: number;
-  type: 'auto' | 'manual';
+  type: 'manual';
 };
 
 export type HistoryItem = {
@@ -14,6 +14,6 @@ export type HistoryItem = {
   thumbnail: string;
 };
 
-export type AppStatus = 'idle' | 'detecting' | 'editing' | 'processing' | 'comparing';
+export type AppStatus = 'idle' | 'editing' | 'processing' | 'comparing';
 
 export type ComparisonMode = 'side-by-side' | 'slider';

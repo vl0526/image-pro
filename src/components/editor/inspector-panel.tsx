@@ -43,43 +43,38 @@ export default function InspectorPanel({
     setSelectedBoxIds([]);
   }
 
+  const updateBoxProperty = (id: string, prop: keyof Box, value: number) => {
+    setBoxes(prev => prev.map(b => b.id === id ? {...b, [prop]: value} : b));
+  }
+
   return (
     <div className="flex h-full flex-col rounded-xl border bg-card p-4 text-card-foreground shadow-lg">
       <h3 className="font-headline text-lg font-semibold">Inspector</h3>
       <p className="text-sm text-muted-foreground">Box Properties</p>
       <Separator className="my-4" />
-      <div className="flex-1 space-y-6 overflow-y-auto">
+      <div className="flex-1 space-y-6 overflow-y-auto pr-2">
         {selectedBox ? (
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <Label htmlFor="pos-x">X</Label>
-                <Input id="pos-x" value={Math.round(selectedBox.x)} readOnly disabled />
+                <Input id="pos-x" type="number" value={Math.round(selectedBox.x)} onChange={e => updateBoxProperty(selectedBox.id, 'x', parseInt(e.target.value, 10))} />
               </div>
               <div>
                 <Label htmlFor="pos-y">Y</Label>
-                <Input id="pos-y" value={Math.round(selectedBox.y)} readOnly disabled />
+                <Input id="pos-y" type="number" value={Math.round(selectedBox.y)} onChange={e => updateBoxProperty(selectedBox.id, 'y', parseInt(e.target.value, 10))} />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <Label htmlFor="width">W</Label>
-                <Input id="width" value={Math.round(selectedBox.width)} readOnly disabled />
+                <Input id="width" type="number" value={Math.round(selectedBox.width)} onChange={e => updateBoxProperty(selectedBox.id, 'width', parseInt(e.target.value, 10))} />
               </div>
               <div>
                 <Label htmlFor="height">H</Label>
-                <Input id="height" value={Math.round(selectedBox.height)} readOnly disabled />
+                <Input id="height" type="number" value={Math.round(selectedBox.height)} onChange={e => updateBoxProperty(selectedBox.id, 'height', parseInt(e.target.value, 10))} />
               </div>
             </div>
-             <Separator className="my-4" />
-             <div>
-                <Label htmlFor="feather-radius">Feather Radius</Label>
-                <Input id="feather-radius" value={24} readOnly disabled />
-              </div>
-               <div>
-                <Label htmlFor="blend-strength">Blend Strength</Label>
-                <Input id="blend-strength" value={0.8} readOnly disabled />
-              </div>
           </div>
         ) : selectedBoxIds.length > 1 ? (
              <div className="text-center text-sm text-muted-foreground p-4 border border-dashed rounded-lg">
@@ -87,7 +82,7 @@ export default function InspectorPanel({
             </div>
         ) : (
           <div className="text-center text-sm text-muted-foreground p-4 border border-dashed rounded-lg h-full flex items-center justify-center">
-            Select a box to see its properties.
+            Select a box to see its properties, or create a new one.
           </div>
         )}
       </div>

@@ -3,13 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  History,
-  UserCircle,
-  User,
-  Settings,
-  LogOut,
-} from "lucide-react";
+import { History, UserCircle, User, Settings, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -58,17 +52,55 @@ export default function Home() {
     reader.onload = (e) => {
       const result = e.target?.result as string;
       setOriginalImage(result);
-      setProcessedImage(result); // Show the same image
-      setStatus("editing"); // Go directly to editing/viewing
+      setProcessedImage(null); // Clear previous processed image
+      setBoxes([]); // Clear previous boxes
+      setSelectedBoxIds([]);
+      setHistory([]);
+      setStatus("editing");
     };
     reader.readAsDataURL(file);
   };
 
   const handleProcess = async () => {
-    // No AI processing, so this button is effectively disabled or does nothing.
+    if (!originalImage) return;
+
+    setStatus("processing");
+
+    // Simulate a non-AI in-painting process
+    // This is a placeholder for a client-side canvas operation
+    const processPromise = new Promise<string>((resolve) => {
+      setTimeout(() => {
+        // In a real app, you'd use a canvas to draw the original image,
+        // then draw filled rectangles over the box areas.
+        // For this demo, we'll just use the original image URL as a stand-in.
+        const newImage = originalImage;
+        resolve(newImage);
+      }, 2500); // Simulate processing time
+    });
+
     toast({
-      title: "No AI Connected",
-      description: "The AI processing functionality has been removed.",
+      title: "Processing Image",
+      description: "Removing text areas...",
+    });
+
+    const newProcessedImage = await processPromise;
+
+    setProcessedImage(newProcessedImage);
+
+    // Add to history
+    const newHistoryItem: HistoryItem = {
+      id: `hist-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      action: `Processed ${boxes.length} boxes`,
+      thumbnail: originalImage, // In a real app, you'd generate a smaller thumbnail
+    };
+    setHistory((prev) => [newHistoryItem, ...prev]);
+
+    setStatus("comparing");
+
+    toast({
+      title: "Processing Complete!",
+      description: "The selected text areas have been removed.",
     });
   };
 
@@ -77,6 +109,7 @@ export default function Home() {
     setProcessedImage(null);
     setBoxes([]);
     setSelectedBoxIds([]);
+    setHistory([]);
     setStatus("idle");
   };
 
