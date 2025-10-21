@@ -52,8 +52,8 @@ export default function Home() {
     reader.onload = (e) => {
       const result = e.target?.result as string;
       setOriginalImage(result);
-      setProcessedImage(null); // Clear previous processed image
-      setBoxes([]); // Clear previous boxes
+      setProcessedImage(null);
+      setBoxes([]);
       setSelectedBoxIds([]);
       setHistory([]);
       setStatus("editing");
@@ -66,8 +66,6 @@ export default function Home() {
 
     setStatus("processing");
 
-    // Simulate a non-AI in-painting process
-    // This is a placeholder for a client-side canvas operation
     const processPromise = new Promise<string>((resolve) => {
       setTimeout(() => {
         // In a real app, you'd use a canvas to draw the original image,
@@ -75,7 +73,7 @@ export default function Home() {
         // For this demo, we'll just use the original image URL as a stand-in.
         const newImage = originalImage;
         resolve(newImage);
-      }, 2500); // Simulate processing time
+      }, 2500);
     });
 
     toast({
@@ -87,12 +85,11 @@ export default function Home() {
 
     setProcessedImage(newProcessedImage);
 
-    // Add to history
     const newHistoryItem: HistoryItem = {
       id: `hist-${Date.now()}`,
       timestamp: new Date().toISOString(),
       action: `Processed ${boxes.length} boxes`,
-      thumbnail: originalImage, // In a real app, you'd generate a smaller thumbnail
+      thumbnail: originalImage,
     };
     setHistory((prev) => [newHistoryItem, ...prev]);
 
@@ -138,7 +135,7 @@ export default function Home() {
               </TooltipContent>
             </Tooltip>
             <SheetContent side="left" className="w-[350px] bg-card p-0">
-               <SheetHeader className="sr-only">
+               <SheetHeader className="p-4 border-b">
                   <SheetTitle>Lịch sử chỉnh sửa</SheetTitle>
               </SheetHeader>
               <HistoryPanel history={history} />

@@ -11,14 +11,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
-
-  // To avoid hydration mismatch, we need to wait for the component to mount
-  // before we can safely access the theme.
   const [mounted, setMounted] = useState(false);
+  
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return (

@@ -12,12 +12,7 @@ type HistoryPanelProps = {
 
 export default function HistoryPanel({ history }: HistoryPanelProps) {
   return (
-    <div className="flex h-full flex-col">
-      <div className="p-4 border-b">
-        <h3 className="font-headline text-lg font-semibold">Lịch sử chỉnh sửa</h3>
-        <p className="text-sm text-muted-foreground">Các phiên bản gần đây</p>
-      </div>
-      <ScrollArea className="flex-1">
+    <ScrollArea className="h-full">
         {history.length > 0 ? (
           <div className="p-4">
             <div className="relative">
@@ -50,7 +45,7 @@ export default function HistoryPanel({ history }: HistoryPanelProps) {
             </div>
           </div>
         ) : (
-          <div className="flex h-full flex-col items-center justify-center text-center p-8">
+          <div className="flex h-[calc(100vh-5rem)] flex-col items-center justify-center text-center p-8">
             <div className="p-4 rounded-full bg-secondary mb-4">
                 <FileClock className="w-12 h-12 text-muted-foreground" />
             </div>
@@ -61,6 +56,5 @@ export default function HistoryPanel({ history }: HistoryPanelProps) {
           </div>
         )}
       </ScrollArea>
-    </div>
   );
 }

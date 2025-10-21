@@ -9,9 +9,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const literata = Literata({ subsets: ["latin"], variable: "--font-literata" });
 
 export const metadata: Metadata = {
-  title: "Manga Text Eraser",
-  description:
-    "AI-powered tool to remove text from images and enhance with an anime style.",
+  title: "remove pro",
+  description: "Advanced tool to remove text from your images.",
 };
 
 export default function RootLayout({

@@ -59,20 +59,34 @@ export default function EditorLayout({
   };
 
   return (
-    <div className="flex h-[calc(100vh-8.5rem)] w-full gap-4 p-4 md:p-6 lg:p-8">
-      <div className="flex flex-1 flex-col gap-4">
-        <div className="relative flex-1 rounded-xl border-2 border-dashed border-border bg-card/50 overflow-hidden">
-          <CanvasArea
-            status={status}
-            originalImage={originalImage}
-            processedImage={processedImage}
+    <div className="flex h-[calc(100vh-4rem)] w-full flex-col">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_350px] gap-4 p-4 md:p-6 lg:p-8 overflow-hidden">
+        <div className="relative flex flex-col gap-4 h-full min-h-0">
+          <div className="relative flex-1 rounded-xl border-2 border-dashed border-border bg-card/50 overflow-hidden">
+            <CanvasArea
+              status={status}
+              originalImage={originalImage}
+              processedImage={processedImage}
+              boxes={boxes}
+              selectedBoxIds={selectedBoxIds}
+              setSelectedBoxIds={setSelectedBoxIds}
+              comparisonMode={comparisonMode}
+            />
+          </div>
+        </div>
+
+        <div className="hidden lg:flex flex-col h-full">
+          <InspectorPanel
             boxes={boxes}
+            setBoxes={setBoxes}
             selectedBoxIds={selectedBoxIds}
             setSelectedBoxIds={setSelectedBoxIds}
-            comparisonMode={comparisonMode}
           />
         </div>
-        <ActionBar
+      </div>
+
+      <div className="border-t px-4 md:px-6 lg:px-8 py-2">
+         <ActionBar
           status={status}
           onProcess={onProcess}
           onReset={onReset}
@@ -82,26 +96,18 @@ export default function EditorLayout({
           canProcess={boxes.length > 0 && status === 'editing'}
         />
       </div>
-
-      <div className="hidden lg:block w-[320px] xl:w-[350px]">
-        <InspectorPanel
-          boxes={boxes}
-          setBoxes={setBoxes}
-          selectedBoxIds={selectedBoxIds}
-          setSelectedBoxIds={setSelectedBoxIds}
-        />
-      </div>
       
-      <div className="absolute top-6 right-6 lg:hidden">
+      <div className="absolute top-20 right-4 lg:hidden">
         <Sheet>
             <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
                     <PanelRightOpen />
+                    <span className="sr-only">Open Inspector</span>
                 </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[350px] bg-card p-0">
-                <SheetHeader className="sr-only">
-                    <SheetTitle>Inspector</SheetTitle>
+                <SheetHeader className="p-4 border-b">
+                  <SheetTitle>Inspector</SheetTitle>
                 </SheetHeader>
                 <InspectorPanel
                   boxes={boxes}
@@ -112,8 +118,6 @@ export default function EditorLayout({
             </SheetContent>
         </Sheet>
       </div>
-
-      {/* ProgressModal is removed as processing is now simulated and quick */}
     </div>
   );
 }

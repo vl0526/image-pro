@@ -11,7 +11,6 @@ import { Separator } from "@/components/ui/separator";
 export default function ProfilePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background font-body text-foreground">
-       {/* We can add a shared header component later */}
        <header className="flex h-16 items-center border-b px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-4">
             <Button asChild variant="ghost" size="icon">
@@ -51,7 +50,7 @@ export default function ProfilePage() {
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="email">Email Address</Label>
-                        <Input id="email" type="email" defaultValue="john.doe@example.com" />
+                        <Input id="email" type="email" defaultValue="john.doe@example.com" disabled />
                     </div>
                     <Button>Save Changes</Button>
                 </CardContent>
