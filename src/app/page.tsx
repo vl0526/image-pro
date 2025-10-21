@@ -59,7 +59,7 @@ export default function Home() {
       <div className="flex items-center gap-4">
         <Logo className="h-8 w-8 text-primary" />
         <h1 className="font-headline text-xl font-bold text-white">
-          Clean Slate
+          remove pro
         </h1>
       </div>
       <div className="flex items-center gap-2">
