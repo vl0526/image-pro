@@ -1,15 +1,28 @@
+"use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
 
 export default function SettingsPage() {
+  const { theme, setTheme } = useTheme();
+  const [language, setLanguage] = useState("en-us");
+
+  // To avoid hydration mismatch, we need to wait for the component to mount
+  // before we can safely access the theme.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    return null; // or a loading spinner
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background font-body text-foreground">
       <header className="flex h-16 items-center border-b px-4 sm:px-6 lg:px-8">
@@ -35,7 +48,11 @@ export default function SettingsPage() {
                 <CardContent className="space-y-6">
                     <div className="space-y-2">
                         <Label>Theme</Label>
-                        <RadioGroup defaultValue="dark" className="flex items-center gap-4">
+                        <RadioGroup 
+                            defaultValue={theme} 
+                            onValueChange={setTheme}
+                            className="flex items-center gap-4"
+                        >
                             <Label htmlFor="theme-light" className="flex items-center gap-2 cursor-pointer">
                                 <RadioGroupItem value="light" id="theme-light" />
                                 Light
@@ -61,7 +78,7 @@ export default function SettingsPage() {
                 <CardContent className="space-y-4">
                      <div className="space-y-2">
                         <Label htmlFor="language">Language</Label>
-                        <Select defaultValue="en-us">
+                        <Select value={language} onValueChange={setLanguage}>
                             <SelectTrigger id="language">
                                 <SelectValue placeholder="Select language" />
                             </SelectTrigger>
@@ -71,34 +88,6 @@ export default function SettingsPage() {
                                 <SelectItem value="ja-jp">日本語 (日本)</SelectItem>
                             </SelectContent>
                         </Select>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle>Notifications</CardTitle>
-                    <CardDescription>Manage how you receive notifications.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                     <div className="flex items-center justify-between">
-                        <Label htmlFor="email-notifications" className="flex flex-col space-y-1">
-                            <span>Email Notifications</span>
-                             <span className="font-normal leading-snug text-muted-foreground">
-                                Receive emails about your account activity.
-                            </span>
-                        </Label>
-                        <Switch id="email-notifications" defaultChecked />
-                    </div>
-                    <Separator />
-                     <div className="flex items-center justify-between">
-                        <Label htmlFor="push-notifications" className="flex flex-col space-y-1">
-                            <span>Push Notifications</span>
-                             <span className="font-normal leading-snug text-muted-foreground">
-                                Get push notifications on your devices.
-                            </span>
-                        </Label>
-                        <Switch id="push-notifications" />
                     </div>
                 </CardContent>
             </Card>
