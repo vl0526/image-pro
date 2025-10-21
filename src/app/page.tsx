@@ -193,9 +193,6 @@ export default function Home() {
               <h2 className="font-headline text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-400">
                 Remove Text from Images
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                xóa nó
-              </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
               <div className="md:col-span-3">
