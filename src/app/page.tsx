@@ -194,25 +194,9 @@ export default function Home() {
                 Remove Text from Images
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
-              <div className="md:col-span-3">
+            <div className="flex justify-center">
+              <div className="w-full max-w-2xl">
                 <UploadArea onUpload={handleUpload} />
-              </div>
-              <div className="md:col-span-2 relative h-full w-full min-h-[300px] rounded-lg overflow-hidden border border-dashed border-border">
-                {uploadExample && (
-                   <Image
-                      src={uploadExample.imageUrl}
-                      alt={uploadExample.description}
-                      fill
-                      data-ai-hint={uploadExample.imageHint}
-                      className="object-cover"
-                    />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                 <div className="absolute bottom-4 left-4">
-                    <p className="text-sm font-semibold text-white">Example Image</p>
-                    <p className="text-xs text-white/70">Manga page with text</p>
-                 </div>
               </div>
             </div>
           </div>
