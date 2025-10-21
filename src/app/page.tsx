@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   History,
   UserCircle,
@@ -10,6 +11,17 @@ import {
   LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -114,19 +126,39 @@ export default function Home() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+              <DropdownMenuItem asChild>
+                <Link href="/profile">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
+              <DropdownMenuItem asChild>
+                <Link href="/settings">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      You will be returned to the login screen.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => console.log("Logged out")}>Log Out</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </DropdownMenuContent>
           </DropdownMenu>
         </TooltipProvider>
