@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { HelpCircle, History, UserCircle } from "lucide-react";
+import { History, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -82,18 +82,6 @@ export default function Home() {
               <HistoryPanel history={history} />
             </SheetContent>
           </Sheet>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <HelpCircle className="h-5 w-5" />
-                <span className="sr-only">Help</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Help</p>
-            </TooltipContent>
-          </Tooltip>
 
           <Tooltip>
             <TooltipTrigger asChild>
