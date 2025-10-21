@@ -17,6 +17,8 @@ import EditorLayout from "@/components/editor/editor-layout";
 import HistoryPanel from "@/components/history/history-panel";
 import type { Box, HistoryItem, AppStatus } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { detectText, eraseText } from "@/ai/flows/image-utils-flow";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
   const [status, setStatus] = useState<AppStatus>("idle");
@@ -25,61 +27,93 @@ export default function Home() {
   const [boxes, setBoxes] = useState<Box[]>([]);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [selectedBoxIds, setSelectedBoxIds] = useState<string[]>([]);
+  const { toast } = useToast();
+
 
   const uploadExample = useMemo(
     () => PlaceHolderImages.find((img) => img.id === "upload-example"),
     []
   );
-  const processedExample = useMemo(
-    () => PlaceHolderImages.find((img) => img.id === "processed-example"),
-    []
-  );
-
-  const handleUpload = (file: File) => {
+  
+  const handleUpload = async (file: File) => {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const result = e.target?.result as string;
       setOriginalImage(result);
       setStatus("detecting");
 
-      setTimeout(() => {
-        // Simulate AI detection
-        setBoxes([
-          { id: "box-1", x: 100, y: 150, width: 200, height: 50, type: "auto" },
-          { id: "box-2", x: 320, y: 250, width: 150, height: 80, type: "auto" },
-          { id: "box-3", x: 50, y: 400, width: 400, height: 60, type: "auto" },
-        ]);
+      try {
+        const detectedBoxes = await detectText({
+          imageDataUri: result,
+        });
+
+        // Get image dimensions to convert relative coords to absolute
+        const img = document.createElement('img');
+        img.src = result;
+        await new Promise(resolve => { img.onload = resolve; });
+
+        setBoxes(
+          detectedBoxes.map((box, i) => ({
+            id: `box-${i}`,
+            x: box.x * img.width,
+            y: box.y * img.height,
+            width: box.width * img.width,
+            height: box.height * img.height,
+            type: "auto",
+          }))
+        );
         setStatus("editing");
-      }, 2000);
+      } catch (error) {
+        console.error("Text detection failed:", error);
+        toast({
+          variant: "destructive",
+          title: "Text Detection Failed",
+          description: "Could not detect text in the image. Please try another one.",
+        });
+        setStatus("idle");
+      }
     };
     reader.readAsDataURL(file);
   };
 
-  const handleProcess = () => {
+  const handleProcess = async () => {
+    if (!originalImage) return;
+
     setStatus("processing");
-    // Simulate API call and enhancement
-    setTimeout(() => {
-      if (processedExample) {
-        setProcessedImage(processedExample.imageUrl);
-      }
+    try {
+      const result = await eraseText({
+        imageDataUri: originalImage,
+        boxes,
+      });
+      setProcessedImage(result.processedImageUri);
+
       const newHistoryItem: HistoryItem = {
         id: `hist-${history.length + 1}`,
         timestamp: new Date().toISOString(),
         action: "Text Removed & Anime Enhanced",
-        thumbnail:
-          PlaceHolderImages.find((img) => img.id === "history-thumb-1")
-            ?.imageUrl || "",
+        thumbnail: result.processedImageUri,
       };
-      setHistory((prev) => [...prev, newHistoryItem]);
+      setHistory((prev) => [newHistoryItem, ...prev]);
       setStatus("comparing");
-    }, 4000);
+
+    } catch (error) {
+      console.error("Image processing failed:", error);
+      toast({
+        variant: "destructive",
+        title: "Processing Failed",
+        description: "Could not remove text from the image. Please try again.",
+      });
+      setStatus("editing");
+    }
   };
+
 
   const handleReset = () => {
     setOriginalImage(null);
     setProcessedImage(null);
     setBoxes([]);
-    setHistory([]);
+    // Keep history for now, but you could clear it.
+    // setHistory([]);
     setSelectedBoxIds([]);
     setStatus("idle");
   };
@@ -144,8 +178,7 @@ export default function Home() {
   const Footer = () => (
     <footer className="flex h-10 items-center justify-center border-t border-white/10 px-4 text-center">
       <p className="text-xs text-muted-foreground">
-        CHÚ Ý: Giao diện này là mô phỏng thiết kế. Không triển khai backend hoặc
-        tích hợp thực tế trong file thiết kế.
+        AI-powered manga text removal.
       </p>
     </footer>
   );

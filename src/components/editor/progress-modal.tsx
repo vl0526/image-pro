@@ -16,10 +16,10 @@ type ProgressModalProps = {
 };
 
 const steps = [
-  "Detection",
-  "Inpainting",
-  "Upscale",
-  "Anime Transform",
+  "Uploading Image",
+  "Inpainting Text Areas",
+  "Applying Anime Style",
+  "Finalizing Image",
 ];
 
 export default function ProgressModal({ status }: ProgressModalProps) {
@@ -34,7 +34,15 @@ export default function ProgressModal({ status }: ProgressModalProps) {
           setCurrentStep(index + 1);
         }, (index + 1) * 1000)
       );
-      return () => timers.forEach(clearTimeout);
+      // Make it feel a bit longer
+      const finalTimer = setTimeout(() => {
+        // This will just hang here until status changes
+      }, (steps.length + 1) * 1000);
+      
+      return () => {
+        timers.forEach(clearTimeout);
+        clearTimeout(finalTimer);
+      }
     }
   }, [isOpen]);
 
