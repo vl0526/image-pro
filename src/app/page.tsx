@@ -24,7 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
   Tooltip,
   TooltipContent,
@@ -138,6 +138,9 @@ export default function Home() {
               </TooltipContent>
             </Tooltip>
             <SheetContent side="left" className="w-[350px] bg-card p-0">
+               <SheetHeader className="sr-only">
+                  <SheetTitle>Lịch sử chỉnh sửa</SheetTitle>
+              </SheetHeader>
               <HistoryPanel history={history} />
             </SheetContent>
           </Sheet>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { PanelRightOpen } from "lucide-react";
 import ActionBar from "./action-bar";
@@ -100,6 +100,9 @@ export default function EditorLayout({
                 </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[350px] bg-card p-0">
+                <SheetHeader className="sr-only">
+                    <SheetTitle>Inspector</SheetTitle>
+                </SheetHeader>
                 <InspectorPanel
                   boxes={boxes}
                   setBoxes={setBoxes}
