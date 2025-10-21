@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "upload-example",
+      "description": "An example of a manga page with text, to be used in the upload area.",
+      "imageUrl": "https://images.unsplash.com/photo-1723209386519-1a5ca4c98ae1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW5nYSUyMHBhZ2V8ZW58MHx8fHwxNzYxMDAzNzU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "manga page"
+    },
+    {
+      "id": "processed-example",
+      "description": "An example of a manga page after text removal and anime enhancement.",
+      "imageUrl": "https://images.unsplash.com/photo-1631582053308-40f482e7ace5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YW5pbWUlMjBhcnR8ZW58MHx8fHwxNzYxMDM5Nzg2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "anime art"
+    },
+    {
+      "id": "history-thumb-1",
+      "description": "Thumbnail for history item 1",
+      "imageUrl": "https://images.unsplash.com/photo-1513346940221-6f673d962e97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhYnN0cmFjdHxlbnwwfHx8fDE3NjA5NjEyMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract"
+    },
+    {
+      "id": "history-thumb-2",
+      "description": "Thumbnail for history item 2",
+      "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdHxlbnwwfHx8fDE3NjA5NjEyMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract"
+    },
+    {
+      "id": "history-thumb-3",
+      "description": "Thumbnail for history item 3",
+      "imageUrl": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhYnN0cmFjdHxlbnwwfHx8fDE3NjA5NjEyMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract"
+    }
+  ]
 }
