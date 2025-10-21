@@ -46,28 +46,6 @@ export default function ProfilePage() {
                     <Button>Save Changes</Button>
                 </CardContent>
             </Card>
-
-             <Card>
-                <CardHeader>
-                    <CardTitle>Password</CardTitle>
-                    <CardDescription>Change your password.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                     <div className="space-y-2">
-                        <Label htmlFor="current-password">Current Password</Label>
-                        <Input id="current-password" type="password" />
-                    </div>
-                     <div className="space-y-2">
-                        <Label htmlFor="new-password">New Password</Label>
-                        <Input id="new-password" type="password" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="confirm-password">Confirm New Password</Label>
-                        <Input id="confirm-password" type="password" />
-                    </div>
-                    <Button>Update Password</Button>
-                </CardContent>
-            </Card>
         </div>
        </main>
     </div>
